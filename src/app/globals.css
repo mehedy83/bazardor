@@ -1,2 +1,50 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+:root {
+  --background: #ffffff;
+  --foreground: #202820;
+  --primary: #168344;
+  --secondary: #f0f8f2;
+  --muted: #718071;
+  --border: #e8eee8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-hind), sans-serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: #d8f3df;
+  color: #126b35;
+}
+
+.container-custom {
+  width: min(100% - 32px, 1152px);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    width: min(100% - 48px, 1152px);
+  }
+}
