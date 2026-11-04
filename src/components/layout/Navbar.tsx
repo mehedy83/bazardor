@@ -4,12 +4,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X, UserCircle } from "lucide-react";
+import { Menu, X } from "lucide-react";
+
 import CategoryNav from "./CategoryNav";
 import PriceTicker from "./PriceTicker";
 
 export default function Navbar() {
   const pathname = usePathname();
+
   const [date, setDate] = useState("");
   const [mobileMenu, setMobileMenu] = useState(false);
 
@@ -30,27 +32,28 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-white">
-      {/* Main Navbar */}
       <div className="border-b border-gray-100">
         <div className="container-custom">
           <div className="flex min-h-[76px] items-center justify-between gap-4">
+
             {/* Logo */}
             <Link href="/" className="flex shrink-0 items-center gap-2">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-100 text-2xl">
-                🛒
+                {/* 🛒 */} <img src="/logo-icon.png" alt="Logo" />
               </span>
 
               <span>
                 <span className="block text-2xl font-bold leading-tight text-green-700">
                   বাজার দর
                 </span>
+
                 <span className="text-xs text-gray-500">
                   {date || "বাংলাদেশের বাজারদর"}
                 </span>
               </span>
             </Link>
 
-            {/* Desktop Authentication */}
+            {/* Desktop Authentication Buttons */}
             <div className="hidden items-center gap-3 sm:flex">
               <Link
                 href="/signin"
@@ -79,12 +82,12 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Category Navigation */}
+          {/* Desktop Category Navigation */}
           <div className="hidden sm:block">
             <CategoryNav />
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile Navigation */}
           {mobileMenu && (
             <div className="border-t border-gray-100 py-4 sm:hidden">
               <CategoryNav mobile />

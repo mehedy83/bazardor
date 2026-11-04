@@ -6,12 +6,16 @@ import { usePathname } from "next/navigation";
 
 const categories = [
   { name: "সব পণ্য", slug: "" },
-  { name: "চাল", slug: "chal" },
-  { name: "ডাল", slug: "dal" },
-  { name: "তেল", slug: "tel" },
-  { name: "সবজি", slug: "sobji" },
-  { name: "মাছ", slug: "mach" },
-  { name: "মাংস", slug: "mangsho" },
+  { name: "🍚চাল", slug: "chal" },
+  { name: "🫘ডাল", slug: "dal" },
+  { name: "🛢️তেল", slug: "tel" },
+  { name: "🥬সবজি", slug: "sobji" },
+  { name: "🐟মাছ", slug: "mach" },
+  { name: "🥩মাংস", slug: "mangsho" },
+  { name: "🥛ডিম-দুধ", slug: "dim" },
+  { name: "🌶️মসলা", slug: "mosla" },
+
+
 ];
 
 interface CategoryNavProps {
