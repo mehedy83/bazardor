@@ -37,9 +37,9 @@ export default function PriceTicker() {
             <span
               className={`font-bold ${
                 item.up === true
-                  ? "text-green-700"
+                  ? "text-red-600"
                   : item.up === false
-                    ? "text-red-600"
+                    ? "text-green-700"
                     : "text-gray-500"
               }`}
             >
