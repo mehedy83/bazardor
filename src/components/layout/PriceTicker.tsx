@@ -2,17 +2,23 @@
 "use client";
 
 import Marquee from "react-fast-marquee";
+import type { Product } from "@/types/product";
+import Link from "next/link";
 
-const tickerItems = [
-  { emoji: "🍚", name: "চাল", price: "৭০ টাকা/কেজি", change: "▲ ২.১%", up: true },
-  { emoji: "🥔", name: "আলু", price: "৩৫ টাকা/কেজি", change: "▼ ১.৫%", up: false },
-  { emoji: "🧅", name: "পেঁয়াজ", price: "৬০ টাকা/কেজি", change: "▲ ৩.২%", up: true },
-  { emoji: "🥚", name: "ডিম", price: "১৩০ টাকা/ডজন", change: "▼ ০.৮%", up: false },
-  { emoji: "🌶️", name: "মরিচ", price: "১২০ টাকা/কেজি", change: "▲ ২.৫%", up: true },
-  { emoji: "🫘", name: "মসুর ডাল", price: "১১০ টাকা/কেজি", change: "— ০.০%", up: null },
-];
+interface PriceTickerProps {
+  products: Product[];
+}
 
-export default function PriceTicker() {
+const formatPrice = (price: number) =>
+  new Intl.NumberFormat("bn-BD", {
+    maximumFractionDigits: 2,
+  }).format(price);
+
+export default function PriceTicker({ products }: PriceTickerProps) {
+  if (products.length === 0) {
+    return null;
+  }
+
   return (
     <div className="border-b border-green-100 bg-green-50">
       <Marquee
@@ -21,34 +27,49 @@ export default function PriceTicker() {
         pauseOnHover
         className="py-3"
       >
-        {tickerItems.map((item, index) => (
-          <div
-            key={index}
-            className="mx-7 flex shrink-0 items-center gap-2 text-sm"
-          >
-            <span className="text-lg">{item.emoji}</span>
+        {products.map((product) => {
+          const isUp = product.change.dir === "up";
+          const isDown = product.change.dir === "down";
 
-            <span className="font-semibold text-gray-800">
-              {item.name}
-            </span>
+          return (
+            <Link
+                key={product.id}
+                href={`/product/${product.slug}`}
+                className="mx-7 flex shrink-0 items-center gap-2 text-sm transition hover:opacity-70 cursor-pointer"
+              >
+              {/* Product Emoji */}
+              <span className="text-lg">
+                {product.image || "🛒"}
+              </span>
 
-            <span className="text-gray-600">{item.price}</span>
+              {/* Product Name */}
+              <span className="font-semibold text-gray-800">
+                {product.nameBn}
+              </span>
 
-            <span
-              className={`font-bold ${
-                item.up === true
-                  ? "text-red-600"
-                  : item.up === false
-                    ? "text-green-700"
-                    : "text-gray-500"
-              }`}
-            >
-              {item.change}
-            </span>
+              {/* Current Price */}
+              <span className="text-gray-600">
+                ৳{formatPrice(product.today)}/{product.unit}
+              </span>
 
-            <span className="ml-5 text-green-200">|</span>
-          </div>
-        ))}
+              {/* Price Change */}
+              <span
+                className={`font-bold ${
+                  isUp
+                    ? "text-red-600"
+                    : isDown
+                      ? "text-green-700"
+                      : "text-gray-500"
+                }`}
+              >
+                {isUp ? "▲" : isDown ? "▼" : "—"}{" "}
+                {formatPrice(product.change.pct)}%
+              </span>
+
+              <span className="ml-5 text-green-200">|</span>
+            </Link>
+          );
+        })}
       </Marquee>
     </div>
   );

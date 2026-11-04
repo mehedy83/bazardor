@@ -1,10 +1,12 @@
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Hind_Siliguri } from "next/font/google";
-
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
 import Providers from "@/components/Providers";
 import Navbar from "@/components/layout/Navbar";
+import { getProducts } from "@/lib/api";
+import type { Product } from "@/types/product";
 
 const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali", "latin"],
@@ -32,11 +34,19 @@ export const metadata: Metadata = {
     "বাংলাদেশের নিত্যপ্রয়োজনীয় পণ্যের বাজারদর এক নজরে দেখুন।",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let products: Product[] = [];
+
+  try {
+    products = await getProducts();
+  } catch (error) {
+    console.error("Failed to load ticker products:", error);
+  }
+
   return (
     <html
       lang="bn"
@@ -44,8 +54,9 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col antialiased">
         <Providers>
-          <Navbar />
+          <Navbar products={products} />
           <main className="flex-1">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

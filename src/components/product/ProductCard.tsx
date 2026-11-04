@@ -28,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       href={`/product/${product.slug}`}
       className="group block rounded-xl border border-gray-200 bg-white p-3 transition hover:-translate-y-1 hover:border-green-200 hover:shadow-md"
     >
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 ">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-green-50">
           <span className="text-3xl">
             {product.image || "🛒"}

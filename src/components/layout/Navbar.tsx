@@ -8,8 +8,13 @@ import { Menu, X } from "lucide-react";
 
 import CategoryNav from "./CategoryNav";
 import PriceTicker from "./PriceTicker";
+import type { Product } from "@/types/product";
 
-export default function Navbar() {
+interface NavbarProps {
+  products: Product[];
+}
+
+export default function Navbar({ products }: NavbarProps) {
   const pathname = usePathname();
 
   const [date, setDate] = useState("");
@@ -35,11 +40,10 @@ export default function Navbar() {
       <div className="border-b border-gray-100">
         <div className="container-custom">
           <div className="flex min-h-[76px] items-center justify-between gap-4">
-
             {/* Logo */}
             <Link href="/" className="flex shrink-0 items-center gap-2">
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-green-100 text-2xl">
-                {/* 🛒 */} <img src="/logo-icon.png" alt="Logo" />
+                <img src="/logo-icon.png" alt="Logo" />
               </span>
 
               <span>
@@ -112,8 +116,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Price Ticker */}
-      <PriceTicker />
+      {/* API Based Price Ticker */}
+      <PriceTicker products={products} />
     </header>
   );
 }
