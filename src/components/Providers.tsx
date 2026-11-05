@@ -13,7 +13,7 @@ export default function Providers({
       {children}
 
       <Toaster
-        position="top-right"
+        position="top-center"
         reverseOrder={false}
         toastOptions={{
           duration: 3000,
