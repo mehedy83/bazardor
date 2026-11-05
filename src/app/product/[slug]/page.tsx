@@ -1,6 +1,8 @@
 
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 import { getProducts } from "@/lib/api";
 
 interface ProductDetailsPageProps {
@@ -18,6 +20,15 @@ export default async function ProductDetailsPage({
   params,
 }: ProductDetailsPageProps) {
   const { slug } = await params;
+
+  // Check authentication on the server
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/signin");
+  }
 
   const products = await getProducts();
   const product = products.find((item) => item.slug === slug);
